@@ -21,7 +21,6 @@ public class ServiceType {
 		definedClass.put(new Text("REMOTE"), HttpClientChannel.class);
 		definedClass.put(new Text("LOCAL"), LocalClientChannel.class);
 	}
-	//private static Set<Text> openServiceTypes = new HashSet<Text> (); //define the state of service type open.
 	
 	/**
 	 * add the user defined service. Defined class that extends {@link ClientChannelBase} is bound to a type.  
@@ -74,11 +73,19 @@ public class ServiceType {
 	 * @return
 	 * @throws Exception 
 	 */
-	private static  boolean checkValid(String type)  {
+	public static  boolean checkValid(String type)  {
 		if (definedClass.containsKey(new Text(type))) {
 			return true;
 		} else {
 			return false;
+		}
+	}
+	
+	public static boolean isDefaultService(String type) {
+		if (userDefinedTypes.contains(new Text(type))) {
+			return false;
+		} else {
+			return true;
 		}
 	}
 	

@@ -9,12 +9,13 @@ import java.nio.ByteBuffer;
 
 
 /*******************************************************
- * For open()'s FSInputStream.
+ * BinosFileInputStream is used to read file as a input 
+ * stream. It provides seek and skip operation.
+ * @author jiangbing
  *******************************************************/
 public class BinosFileInputStream extends BinosInputStream {
   private FileInputStream fis;
   private long position;
-  private char lineBuffer[];
 
   public BinosFileInputStream(File f) throws IOException {
     this.fis = new TrackingFileInputStream(f);

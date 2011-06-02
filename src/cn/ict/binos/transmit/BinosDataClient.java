@@ -7,14 +7,16 @@ import java.util.List;
 
 import org.apache.hadoop.io.Text;
 
-public class BinosDataClient {
+public class BinosDataClient<T> {
 	private DataInput in;
 	private DataOutput out;
-	//private List<BinosURL>  requestURLs = new ArrayList<BinosURL> (); // request the list of url.
+	//private List<BinosURL>  requestURLs = new ArrayList<BinosURL> (); // request the list of url. 
 	private BinosURL reqURL;
-	public void requestURL(Text url) {
+	public void getData(Text url, T value) {
 		reqURL  = new BinosURL(url);
-		ServiceType.findService(reqURL) 
+		Class<? extends ClientChannelBase> ccb = ServiceType.findService(reqURL);
+		
+		
 	}
 	
 	public static void main() {

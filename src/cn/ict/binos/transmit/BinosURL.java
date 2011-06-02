@@ -20,8 +20,44 @@ public class BinosURL implements Writable, Cloneable {
 	private Logger LOG = Logger.getLogger(BinosURL.class.getName());
 	private Text url;
 	private String type = null; //the service type
-	private String ops = null; //the operation eg. readLine(FileInputStream),getValue...
+	private String ops = null; //the operation eg. read, write, get, put, delete, update... 
 	private String opsUrl = null;//the path that operation handles, eg, hdfs://10.5.0.170:26666/user/jiangbing/input/a.txt
+	/**
+	 * construct a BinosURL.
+	 * In the context that task to be executed, path contains two kind of content.
+	 * One is operation,the other is service-dependent identifies.
+	 * <p>Example:</p>
+	 * <p><blockquote><pre>
+	 * 	<path type="LOCAL" ops="read">/tmp/input/input1</path>
+	 *  <path type="HDFS" ops="write">hdfs://10.5.0.170:26666/user/hadoop/output/output1</path>
+	 *  <path type="REMOTE" ops="read">http://10.5.0.171:34212/tmp/remote/input/input2</path>
+	 * </pre></blockquote></p>
+	 *
+	 * @param path: "read#/tmp/input/input1" is the first path, whose format is 'ops'#'path value'. 
+	 * @param type: the type of service.
+	 */
+	public BinosURL(String path, String type) throws Exception{
+		if (!ServiceType.checkValid(type)) {
+			LOG.log(Level.SEVERE, "ServiceType:" + type + "Not Defined!");
+			throw new Exception( "ServiceType:" + type + "Not Defined!");
+		} else {
+			this.type = type;
+			String[] tmp = path.split("#");
+			if (tmp.length < 2) {
+				LOG.log(Level.SEVERE, "Path " + path + " format error!" );
+				throw new Exception("Path " + path + " format error!" );
+			} 
+			this.ops = tmp[0];
+			this.opsUrl = tmp[1];
+			this.url = new Text(this.type+"#"+path);
+		}
+	}
+	/**
+	 * construct from an intergrate BinosURL.
+	 * 
+	 * url format : ($ServiceType)@Binos#($operation)#($service dependent url) 
+	 * @param url 
+	 */
 	public BinosURL(Text url) {
 		this.url = url;
 		parseURL();
@@ -105,14 +141,6 @@ public class BinosURL implements Writable, Cloneable {
 	public boolean isDefaultService() {
 		return ServiceType.isDefaultService(this.type);
 	}
-//	/**
-//	 * 
-//	 * @return
-//	 */
-//	public Method getOperation(ClientChannelBase base) {
-//		Class cls = Class.forName(ClientChannelBase.class.getName());
-//		return new Method();
-//	}
 	public Text getUrl() {
 		return this.url;
 	}

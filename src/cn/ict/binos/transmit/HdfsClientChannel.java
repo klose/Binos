@@ -31,17 +31,13 @@ public class HdfsClientChannel<T> extends ClientChannelBase<T> {
 		return null;
 	}
 
-	@Override
-	public T readLine(DataInput in) throws IOException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	@Override
-	public T readBuffer(byte[] b, int off, int len, DataInput in)
+	public void readBuffer(byte[] b, int off, int len, DataInput in)
 			throws IOException {
 		// TODO Auto-generated method stub
-		return null;
+		return ;
 	}
 	
 }

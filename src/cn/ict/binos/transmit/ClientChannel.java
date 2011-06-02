@@ -1,6 +1,10 @@
 package cn.ict.binos.transmit;
 import java.io.DataInput;
+import java.io.DataOutput;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import org.apache.hadoop.io.Text;
 /**
  * ClientChannel : defines access api between client and server.
@@ -18,8 +22,13 @@ public interface ClientChannel<T> {
 	
 	public T delete(Text key, T value);
 	
-	public T readLine(DataInput in) throws IOException;
+	public InputStream open() throws IOException;
 	
-	public T readBuffer(byte b[], int off, int len, DataInput in) throws IOException;
-
+	public OutputStream create() throws IOException;
+	
+	
+	public void readBuffer(byte b[], int off, int len, DataInput in) throws IOException;
+	
+	
+	public void writeBuffer(byte b[], int off, int len, DataOutput out) throws IOException;
 }

@@ -24,49 +24,31 @@ public class BinosDataClient {
 	}
 	public static InputStream getInputStream(BinosURL url) throws Exception {
 		//Class <? extends ClientChannelBase> cls = ServiceType.findService(url);
-		if (!supportOps.contains(url.getServiceOps())) {
+		String ops = url.getServiceOps();
+		if (!supportOps.contains(ops)) {
 			LOG.log(Level.SEVERE,url.getUrl().toString() + "contains an unrecongnized opearation.");
 			throw new Exception(url.getUrl().toString() + "contains an unrecongnized opearation.");
+		} 
+		if (!ops.equals("read")) {
+			LOG.log(Level.SEVERE, url.getUrl() + ": " + ops + " collides with getInputStream().");
+			throw new Exception(url.getUrl() + ": " + ops + " collides with getInputStream().");
 		}
 		LocalClientChannel lcc = new LocalClientChannel(url.getServiceOpsUrl());
-		//Constructor c = cls.getConstructor()
 		return lcc.open();
-//		try {
-//			
-//		} catch (InstantiationException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IllegalAccessException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return null;
-		
 	}
 	
-	public OutputStream getOutputStream(BinosURL url) throws Exception{
-		Class <? extends ClientChannelBase> cls = ServiceType.findService(url);
-		if (!supportOps.contains(url.getServiceOps())) {
+	public static OutputStream getOutputStream(BinosURL url) throws Exception{
+		String ops = url.getServiceOps();
+		if (!supportOps.contains(ops)) {
 			LOG.log(Level.SEVERE,url.getUrl().toString() + "contains an unrecongnized opearation.");
 			throw new Exception(url.getUrl().toString() + "contains an unrecongnized opearation.");
+		}  
+		if (!ops.equals("write")) {
+			LOG.log(Level.SEVERE, url.getUrl() + ": " + ops + " collides with getOutputStream().");
+			throw new Exception(url.getUrl() + ": " + ops + " collides with getOutputStream().");
 		}
-		try {
-			ClientChannelBase ccb = cls.newInstance();
-			return ccb.create();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+		LocalClientChannel lcc = new LocalClientChannel(url.getServiceOpsUrl());
+		return lcc.create();
 	}
 	public static void main() {
 	

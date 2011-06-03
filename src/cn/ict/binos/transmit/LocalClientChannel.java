@@ -7,6 +7,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.apache.commons.logging.Log;
 
 
 import cn.ict.binos.io.BinosFileInputStream;
@@ -20,6 +24,7 @@ import cn.ict.binos.io.BinosFileOutputStream;
  */
 public class LocalClientChannel<T> extends ClientChannelBase<T> {
 	public static Set<String> supportOps = new HashSet<String> ();
+	private static Logger LOG = Logger.getLogger(LocalClientChannel.class.getName());
 	private File file;
 	private String path;
 	private InputStream in = null;
@@ -55,11 +60,14 @@ public class LocalClientChannel<T> extends ClientChannelBase<T> {
 	 */
 	public OutputStream create() throws IOException {
 		if (!this.file.exists()) {
-			throw new FileNotFoundException(this.path);
-		} else {
-			out = new BinosFileOutputStream(this.file);
-			return out;
-		}	
+			if (this.file.createNewFile()) {
+				LOG.log(Level.INFO, "LocalClientChannel create a new file " + file.toString());
+			} else {
+				LOG.log(Level.SEVERE, "LocalClientChannel cannot create a new file " + file.toString());
+				throw new IOException("LocalClientChannel cannot create a new file " + file.toString());
+			}
+		}
+		out = new BinosFileOutputStream(this.file);
+		return out;
 	}
-	
 }

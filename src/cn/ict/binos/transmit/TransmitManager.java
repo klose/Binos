@@ -15,7 +15,6 @@ import org.apache.hadoop.io.Text;
  */
 public class TransmitManager {
 	public static Map<BinosURL, ChannelStatus> urlStatus = new ConcurrentHashMap<BinosURL, ChannelStatus>();
-	
 	public static void main() {
 		
 	}

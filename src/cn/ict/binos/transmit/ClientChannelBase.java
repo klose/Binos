@@ -10,6 +10,11 @@ import org.apache.hadoop.io.Text;
 
 public abstract class ClientChannelBase<T> implements ClientChannel<T> {
 
+	
+	public  static boolean searchOps(String ops){
+		return false;
+	}
+	
 	@Override
 	public T getValue(Text key) {
 		// TODO Auto-generated method stub

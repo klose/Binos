@@ -61,7 +61,7 @@ public class ServiceType {
 	public static  Class<? extends ClientChannelBase> findService(BinosURL url) {
 		String type = url.getServiceType();
 		if (checkValid(type)) {
-			return definedClass.get(type);
+			return definedClass.get(new Text(type));
 		} else {
 			return null;
 		}

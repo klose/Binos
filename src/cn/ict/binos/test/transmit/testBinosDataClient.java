@@ -11,6 +11,7 @@ import org.apache.hadoop.io.Text;
 import cn.ict.binos.io.BinosFileOutputStream;
 import cn.ict.binos.test.io.TestBinosFileOutputStream;
 import cn.ict.binos.transmit.BinosDataClient;
+import cn.ict.binos.transmit.BinosHttpServer;
 import cn.ict.binos.transmit.BinosURL;
 
 public class testBinosDataClient {
@@ -37,9 +38,13 @@ public class testBinosDataClient {
 		System.out.println(out.getPos());
 		out.close();
 	}
+	
 	public static void main(String[] args) throws Exception {
 		boolean testLocalWrite = false;
-		boolean testLocalRead = false;	
+		boolean testLocalRead = false;
+		boolean testHdfsWrite = false;
+		boolean testHdfsRead = false;
+		boolean testRemoteRead = false;
 		String path = "";
 		BinosURL url;
 		TestBinosFileOutputStream tbfis = null;
@@ -56,7 +61,14 @@ public class testBinosDataClient {
 		          testLocalWrite = true;
 	        } else if (args[i].equals("-testLocalRead")) {
 		          testLocalRead = true;
-	        } else {
+	        } else if (args[i].equals("-testHdfsWrite")) {
+	        	testHdfsWrite = true;
+	        } else if (args[i].equals("-testHdfsRead")) {
+	        	testHdfsRead = true;
+	        } else if (args[i].equals("-testRemoteRead")) {
+	        	testRemoteRead = true;
+	        }
+	        else {
 	        	path = args[i];
 	        }
 		}

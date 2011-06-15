@@ -30,8 +30,8 @@ public class LocalClientChannel<T> extends ClientChannelBase<T> {
 	private InputStream in = null;
 	private OutputStream out = null;
 	static{
-		supportOps.add("open");
-		supportOps.add("create");
+		supportOps.add("read");
+		supportOps.add("write");
 	}
 	public LocalClientChannel(String path) {
 		this.path = path;

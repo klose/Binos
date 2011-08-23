@@ -62,7 +62,9 @@ public class BinosURL implements Writable, Cloneable {
 		this.url = url;
 		parseURL();
 	}
-	
+	public static String transformBinosURL(String path, String type, String ops) {
+		return type + "@Binos#" + ops + "#" + path;
+	}
 	/*split the url to fetch type, ops and opsUrl */
 	private void parseURL() {
 		String[] tmp = this.url.toString().split("#");
@@ -90,7 +92,13 @@ public class BinosURL implements Writable, Cloneable {
 		}
 	}
 	
-	
+	/*
+	 *  get the path from BinosURL
+	 *  For example: 
+	 * */
+	public static String getPath(BinosURL url) {
+		return url.getServiceOpsUrl();
+	}
 	public String getServiceType() {
 		if (this.type != null) {
 			return this.type;

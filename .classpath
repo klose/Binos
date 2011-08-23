@@ -10,5 +10,7 @@
 	<classpathentry kind="lib" path="/home/jiangbing/hadoop-0.21.0/conf"/>
 	<classpathentry kind="lib" path="src/lib/hadoop-hdfs-0.21.0.jar"/>
 	<classpathentry kind="lib" path="src/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="src/lib/memcached-2.6.jar" sourcepath="/home/jiangbing/JLoop/memcached-2.6-sources.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Transformer"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

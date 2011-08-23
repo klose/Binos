@@ -84,9 +84,17 @@ public class BinosHttpServer {
 		ServletHandler servletHandler = new ServletHandler(); 
 		this.jettyServer.setHandler(servletHandler);
 		servletHandler.addServletWithMapping("cn.ict.binos.transmit.BinosHttpServer$OutputServlet", "/output");
-		this.jettyServer.start();
+		
 	}
 	
+	public void start() {
+		try {
+			this.jettyServer.start();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	/**
 	 * method to build socket addr from either: <host> <host>:<post>
 	 * <fs>://<host>:<port>/<path>
@@ -252,6 +260,7 @@ public class BinosHttpServer {
 	  //just for test
 	  public static void main(String[] args) throws Exception {
 		  BinosHttpServer httpServer = new BinosHttpServer("0.0.0.0:36661", -1);
+		  httpServer.start();
 		  URL url = new URL("http://127.0.0.1:36661/output?job=0&task=1_1_1&id=1");
 		  HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 		  connection.connect();

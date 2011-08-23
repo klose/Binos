@@ -54,6 +54,7 @@ public class testBinosDataClient {
 		System.out.println(out.getPos());
 		out.close();
 	}
+	
 	public static void testHdfsRead(BinosURL url) throws Exception{
 		InputStream in = BinosDataClient.getInputStream(url);
 		int data;

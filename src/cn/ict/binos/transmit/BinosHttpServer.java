@@ -194,20 +194,24 @@ public class BinosHttpServer {
 		public void doGet(HttpServletRequest request,
 				HttpServletResponse response) throws ServletException,
 				IOException {
-			String jobId = (String) request.getParameter("job");
-			String taskId = (String) request.getParameter("task");
-			String pathId = (String) request.getParameter("id");
-			if (jobId == null) {
-				throw new IOException("job parameter is required");
-			}
-			if (taskId == null) {
-				throw new IOException("task parameter is required");
-			}
-			if (pathId == null) {
+//			String jobId = (String) request.getParameter("job");
+//			String taskId = (String) request.getParameter("task");
+//			String pathId = (String) request.getParameter("id");
+//			if (jobId == null) {
+//				throw new IOException("job parameter is required");
+//			}
+//			if (taskId == null) {
+//				throw new IOException("task parameter is required");
+//			}
+//			if (pathId == null) {
+//				throw new IOException("file path id parameter is required");
+//			}
+//			String outputPath = homeDirPath + jobId + "/" + taskId + "/"
+//					+ pathId;
+			String outputPath = (String) request.getParameter("file");
+			if (outputPath == null) {
 				throw new IOException("file path id parameter is required");
 			}
-			String outputPath = homeDirPath + jobId + "/" + taskId + "/"
-					+ pathId;
 			response.setContentType("text/html");
 			response.setStatus(HttpServletResponse.SC_OK);
 //			response.getWriter().println(
@@ -261,17 +265,16 @@ public class BinosHttpServer {
 	  public static void main(String[] args) throws Exception {
 		  BinosHttpServer httpServer = new BinosHttpServer("0.0.0.0:36661", -1);
 		  httpServer.start();
-		  URL url = new URL("http://127.0.0.1:36661/output?job=0&task=1_1_1&id=1");
-		  HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-		  connection.connect();
-		  
-		  BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-		  //connection.getOutputStream();
-		  String tmp = null;
-		  while ((tmp = br.readLine()) != null) {
-			  System.out.println(tmp);
-			  
-		  }
+//		  URL url = new URL("http://127.0.0.1:36661/output?file=/tmp/JLoopClient/1_1_0outputPath0");
+//		  HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+//		  connection.connect();
+//		  BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+//		  //connection.getOutputStream();
+//		  String tmp = null;
+//		  while ((tmp = br.readLine()) != null) {
+//			  System.out.println(tmp);
+//			  
+//		  }
 		  
 //		  DataInputStream input = new DataInputStream(connection.getInputStream());
 		  

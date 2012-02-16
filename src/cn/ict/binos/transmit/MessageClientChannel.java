@@ -1,23 +1,28 @@
 package cn.ict.binos.transmit;
+import org.apache.hadoop.io.Text;
 import org.zeromq.*;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
 //use zeromq to send message.
-public class MessageClientChannel<T> extends ClientChannelBase<T> {
+public class MessageClientChannel<T> extends ClientChannelBase<byte[]> {
 	public static Set<String> supportOps = new HashSet<String> ();
-	private static Logger LOG = Logger.getLogger(HttpClientChannel.class.getName());
+	private static Logger LOG = Logger.getLogger(MessageClientChannel.class.getName());
 	private String InProEndpoint;
-	private ZContext context=null;
+	private ZContext context = null;
 	private static ZMQ.Socket SocketToLocalDataServer = null;
+	static {
+		supportOps.add("get");
+		supportOps.add("set");
+	};
 	public MessageClientChannel() {
 		InProEndpoint="tcp://127.0.0.1:56432";
 		context = new ZContext();
 		SocketToLocalDataServer = context.createSocket(ZMQ.REQ);
 		SocketToLocalDataServer.connect(InProEndpoint);
 	}	
-	public int StoreMessage(String key,byte[] data)
+	private int StoreMessage(String key,byte[] data)
 	{
 		ZMsg SendMsg = new ZMsg();
 		SendMsg.addLast("INSERT");
@@ -54,7 +59,8 @@ public class MessageClientChannel<T> extends ClientChannelBase<T> {
 			return 0;
 		}
 	}
-	public int FreeAllDataByNodeEndpoint(String Endpoint)
+
+	private int FreeAllDataByNodeEndpoint(String Endpoint)
 	{
 		ZMsg SendMsg=new ZMsg();
 		SendMsg.addLast("DELETENODE");
@@ -73,35 +79,66 @@ public class MessageClientChannel<T> extends ClientChannelBase<T> {
 			return 0;
 		}
 	}
-		public byte[] GetData(String key)
-		{
-			ZMsg SendMsg=new ZMsg();
-			SendMsg.addLast("RECEIVE");
-			SendMsg.addLast(key);
+	private byte[] GetData(String key)
+	{
+		ZMsg SendMsg=new ZMsg();
+		SendMsg.addLast("RECEIVE");
+		SendMsg.addLast(key);
 			
-			SendMsg.send(SocketToLocalDataServer);
-			ZMsg Recvmsg=ZMsg.recvMsg(SocketToLocalDataServer);
-			ZFrame FirstFrame=Recvmsg.pop();
-			String BackString=new String(FirstFrame.getData());
-			if(BackString.equals("OK"))
-			{
-				ZFrame SecondFrame=Recvmsg.pop();
-				return SecondFrame.getData();
-			}
-			else
-			{
-				byte[] tmp=null;
-				return tmp;
-			}
+		SendMsg.send(SocketToLocalDataServer);
+		ZMsg Recvmsg=ZMsg.recvMsg(SocketToLocalDataServer);
+		ZFrame FirstFrame=Recvmsg.pop();
+		String BackString=new String(FirstFrame.getData());
+		if(BackString.equals("OK"))
+		{
+			ZFrame SecondFrame=Recvmsg.pop();
+			return SecondFrame.getData();
+		}
+		else
+		{
+			byte[] tmp=null;
+			return tmp;
+		}
 	}
 	
-		
+    @Override
+	public byte[] getValue(Text key) {
+		return GetData(key.toString());
+	}
+    @Override
+	public int putValue(Text key, byte[] value) {
+		// TODO Auto-generated method stub
+    	return StoreMessage(key.toString(), value);
+	}	
 	//just for testing
 	public static void main(String[] args)
 	{
-		MessageClientChannel _data=new MessageClientChannel();
-		String Data="love you";
+		if (args.length < 2) {
+			LOG.info("args length error! length:" + args.length);
+			System.exit(-1);
+		}
+		MessageClientChannel _data = new MessageClientChannel();
+		if (args[0].equals("put")) {
+			if (_data.putValue(new Text(args[1]), args[2].getBytes()) ==1 ) {
+				LOG.info("PUT operation successfully!");
+			}
+			else {
+				LOG.info("PUT operation wrong!");
+			}
+		}
+		else if (args[0].equals("get")) {
+			System.out.println(new String(_data.getValue(new Text(args[1]))));
+		}
+		else if (args[0].equals("delete")) {
+			if (_data.FreeData(args[1]) == 1) {
+				LOG.info("DELETE operation successfully!");;
+			}else {
+				LOG.info("DELETE operation wrong!");
+			}
+		}
+		/*String Data="love you";
 		_data.StoreMessage("heihei", Data.getBytes());
+		
 		for(int i=0;i<10;i++)
 		{
 			byte[] rtv=_data.GetData("heihei");
@@ -117,7 +154,7 @@ public class MessageClientChannel<T> extends ClientChannelBase<T> {
 		_data.StoreMessage("heihei", Data.getBytes());
 		byte[] rtv2=_data.GetData("heihei");
 			//if(rtv1!=null)
-		System.out.println((new String(rtv2)));	
+		System.out.println((new String(rtv2)));*/	
 	}
 }
 

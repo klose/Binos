@@ -22,9 +22,9 @@ public abstract class ClientChannelBase<T> implements ClientChannel<T> {
 	}
 
 	@Override
-	public T putValue(Text key, T value) {
+	public int putValue(Text key, T value) {
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
 
 	@Override

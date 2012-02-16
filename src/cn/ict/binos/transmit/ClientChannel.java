@@ -16,7 +16,7 @@ public interface ClientChannel<T> {
 	
 	public T getValue(Text key);
 	
-	public T putValue(Text key, T value);
+	public int putValue(Text key, T value);
 	
 	public T updateValue(Text key, T value);
 	

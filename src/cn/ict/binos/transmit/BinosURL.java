@@ -142,6 +142,12 @@ public class BinosURL implements Writable, Cloneable {
 		}
 	}
 	/**
+	 * return the type of BinosURL
+	 */
+	public static String  getType(BinosURL url) {
+		return url.type;
+	}
+	/**
 	 * There are two kind of data access service.The one is default service, 
 	 * the other one is defined service.   
 	 * @return
@@ -151,6 +157,10 @@ public class BinosURL implements Writable, Cloneable {
 	}
 	public Text getUrl() {
 		return this.url;
+	}
+	@Override
+	public String toString() {
+		return this.url.toString();
 	}
 	@Override
 	public void readFields(DataInput arg0) throws IOException {

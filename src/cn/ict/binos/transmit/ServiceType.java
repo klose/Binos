@@ -13,6 +13,7 @@ import com.transformer.compiler.TransmitType;
 
 public class ServiceType {
 	public static enum defaultType {NONE, HDFS, MEMCACHED, MESSAGE, REMOTE, LOCAL};
+	
 	private static Set<Text> userDefinedTypes = new HashSet<Text> ();
 	private static Map<Text, Class<? extends ClientChannelBase>> definedClass = 
 		new HashMap<Text, Class<? extends ClientChannelBase>> ();
@@ -54,7 +55,7 @@ public class ServiceType {
 			case MESSAGE:
 				return defaultType.MESSAGE;
 			default:
-				return defaultType.NONE;
+				return defaultType.HDFS;
 		}
 	}
 	/**

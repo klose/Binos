@@ -48,6 +48,7 @@ public class BinosHttpServer {
 	private String path;
 	private static String homeDirPath;
 	private int httpMaxThreads;
+	private static volatile boolean isActive = false;
 	protected final Server jettyServer;
 	protected final Connector listener;
 	
@@ -90,11 +91,26 @@ public class BinosHttpServer {
 	public void start() {
 		try {
 			this.jettyServer.start();
+			isActive = true;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * test whether the Socket port is occupied by other server or 
+	 * the same server in single machine.
+	 * @param port： test the port in local machine
+	 * @return
+	 */
+	//public boolean checkIsActive(int port) {
+		
+//		JettyServer server = new JettyServer();
+//		
+//		if ()
+//		
+//		return this.isActive;
+	//}
 	/**
 	 * method to build socket addr from either: <host> <host>:<post>
 	 * <fs>://<host>:<port>/<path>
@@ -181,6 +197,8 @@ public class BinosHttpServer {
 	    }
 	    //webAppContext.addServlet(holder, pathSpec);
 	  }
+	 
+	  
 
 	/**
 	 * This class is used in BinosHttpServer Jetty to serve the task outputs to
@@ -263,7 +281,7 @@ public class BinosHttpServer {
 	}
 	  //just for test
 	  public static void main(String[] args) throws Exception {
-		  BinosHttpServer httpServer = new BinosHttpServer("0.0.0.0:36661", -1);
+		  BinosHttpServer httpServer = new BinosHttpServer("0.0.0.0:36662", -1);
 		  httpServer.start();
 //		  URL url = new URL("http://127.0.0.1:36661/output?file=/tmp/JLoopClient/1_1_0outputPath0");
 //		  HttpURLConnection connection = (HttpURLConnection) url.openConnection();

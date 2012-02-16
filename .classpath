@@ -2,15 +2,16 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="src/lib/commons-logging-api-1.1.jar"/>
-	<classpathentry kind="lib" path="src/lib/hadoop-common-0.21.0.jar" sourcepath="/HadoopCommon"/>
-	<classpathentry kind="lib" path="src/lib/jetty-6.1.14.jar" sourcepath="/home/jiangbing/JLoop/jetty-6.1.14-src.zip"/>
-	<classpathentry kind="lib" path="src/lib/jetty-util-6.1.14.jar"/>
-	<classpathentry kind="lib" path="src/lib/servlet-api-2.5-6.1.14.jar"/>
 	<classpathentry kind="lib" path="/home/jiangbing/hadoop-0.21.0/conf"/>
-	<classpathentry kind="lib" path="src/lib/hadoop-hdfs-0.21.0.jar"/>
-	<classpathentry kind="lib" path="src/lib/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="src/lib/memcached-2.6.jar" sourcepath="/home/jiangbing/JLoop/memcached-2.6-sources.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-api-1.1.jar"/>
+	<classpathentry kind="lib" path="lib/hadoop-common-0.21.0.jar"/>
+	<classpathentry kind="lib" path="lib/hadoop-hdfs-0.21.0.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-6.1.14.jar"/>
+	<classpathentry kind="lib" path="lib/jetty-util-6.1.14.jar"/>
+	<classpathentry kind="lib" path="lib/memcached-2.6.jar"/>
+	<classpathentry kind="lib" path="lib/servlet-api-2.5-6.1.14.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Transformer"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="lib" path="lib/zmq.jar"/>
+	<classpathentry kind="output" path="classes"/>
 </classpath>

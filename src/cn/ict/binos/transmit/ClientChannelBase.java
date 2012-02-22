@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.apache.hadoop.io.Text;
+
 
 public abstract class ClientChannelBase<T> implements ClientChannel<T> {
 
@@ -16,25 +16,25 @@ public abstract class ClientChannelBase<T> implements ClientChannel<T> {
 	}
 	
 	@Override
-	public T getValue(Text key) {
+	public T getValue(String key) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int putValue(Text key, T value) {
+	public int putValue(String key, T value) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public T updateValue(Text key, T value) {
+	public T updateValue(String key, T value) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public T delete(Text key, T value) {
+	public T delete(String key, T value) {
 		// TODO Auto-generated method stub
 		return null;
 	}

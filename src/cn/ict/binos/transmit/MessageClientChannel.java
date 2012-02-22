@@ -1,5 +1,5 @@
 package cn.ict.binos.transmit;
-import org.apache.hadoop.io.Text;
+
 import org.zeromq.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -102,11 +102,11 @@ public class MessageClientChannel<T> extends ClientChannelBase<byte[]> {
 	}
 	
     @Override
-	public byte[] getValue(Text key) {
+	public byte[] getValue(String key) {
 		return GetData(key.toString());
 	}
     @Override
-	public int putValue(Text key, byte[] value) {
+	public int putValue(String key, byte[] value) {
 		// TODO Auto-generated method stub
     	return StoreMessage(key.toString(), value);
 	}	
@@ -119,7 +119,7 @@ public class MessageClientChannel<T> extends ClientChannelBase<byte[]> {
 		}
 		MessageClientChannel _data = new MessageClientChannel();
 		if (args[0].equals("put")) {
-			if (_data.putValue(new Text(args[1]), args[2].getBytes()) ==1 ) {
+			if (_data.putValue(args[1], args[2].getBytes()) ==1 ) {
 				LOG.info("PUT operation successfully!");
 			}
 			else {
@@ -127,7 +127,7 @@ public class MessageClientChannel<T> extends ClientChannelBase<byte[]> {
 			}
 		}
 		else if (args[0].equals("get")) {
-			System.out.println(new String(_data.getValue(new Text(args[1]))));
+			System.out.println(new String(_data.getValue(args[1])));
 		}
 		else if (args[0].equals("delete")) {
 			if (_data.FreeData(args[1]) == 1) {

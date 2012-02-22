@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.apache.hadoop.io.Text;
+
 /**
  * ClientChannel : defines access api between client and server.
  * @author jiangbing May 30, 2011
@@ -14,13 +14,13 @@ import org.apache.hadoop.io.Text;
  */
 public interface ClientChannel<T> {
 	
-	public T getValue(Text key);
+	public T getValue(String key);
 	
-	public int putValue(Text key, T value);
+	public int putValue(String key, T value);
 	
-	public T updateValue(Text key, T value);
+	public T updateValue(String key, T value);
 	
-	public T delete(Text key, T value);
+	public T delete(String key, T value);
 	
 	public InputStream open() throws IOException;
 	

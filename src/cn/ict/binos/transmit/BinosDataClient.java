@@ -109,6 +109,42 @@ public class BinosDataClient {
 		}
 		
 	}
+	public static void put(BinosURL url, byte[] data) throws Exception {
+		String ops = url.getServiceOps();
+		String serviceType = url.getServiceType();
+		String opsUrl = url.getServiceOpsUrl();
+		if (!supportOps.contains(ops)) {
+			LOG.log(Level.SEVERE,url.getUrl().toString() + "contains an unrecongnized opearation.");
+			throw new Exception(url.getUrl().toString() + "contains an unrecongnized opearation.");
+		}
+		if (!ops.equals("write")) {
+			LOG.log(Level.SEVERE, url.getUrl() + ": " + ops + " collides with put(BinosURL url, byte[] data).");
+			throw new Exception(url.getUrl() + ": " + ops + " collides with put(BinosURL url, byte[] data).");
+		}
+		if (serviceType.equals("MESSAGE")) {
+			MessageClientChannel mcc = new MessageClientChannel();
+			mcc.putValue(url.getServiceOpsUrl(), data);
+		}
+	}
+	
+	public static byte[] get(BinosURL url) throws Exception {
+		String ops = url.getServiceOps();
+		String serviceType = url.getServiceType();
+		String opsUrl = url.getServiceOpsUrl();
+		if (!supportOps.contains(ops)) {
+			LOG.log(Level.SEVERE,url.getUrl().toString() + "contains an unrecongnized opearation.");
+			throw new Exception(url.getUrl().toString() + "contains an unrecongnized opearation.");
+		}
+		if (!ops.equals("read")) {
+			LOG.log(Level.SEVERE, url.getUrl() + ": " + ops + " collides with get(BinosURL url).");
+			throw new Exception(url.getUrl() + ": " + ops + " collides with get(BinosURL url).");
+		}
+		if (serviceType.equals("MESSAGE")) {
+			MessageClientChannel mcc = new MessageClientChannel();
+			return mcc.getValue(url.getServiceOpsUrl());
+		}
+		return null;
+	}
 //	public static void main() {
 //	
 //	}

@@ -11,10 +11,12 @@ public class MessageClientChannel<T> extends ClientChannelBase<byte[]> {
 	private static Logger LOG = Logger.getLogger(MessageClientChannel.class.getName());
 	private String InProEndpoint;
 	private ZContext context = null;
-	private static ZMQ.Socket SocketToLocalDataServer = null;
+	private ZMQ.Socket SocketToLocalDataServer = null;
 	static {
 		supportOps.add("get");
 		supportOps.add("set");
+		supportOps.add("read");
+		supportOps.add("write");
 	};
 	public MessageClientChannel() {
 		InProEndpoint="tcp://127.0.0.1:56432";

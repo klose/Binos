@@ -99,6 +99,10 @@ public class BinosURL implements Writable, Cloneable {
 	public static String getPath(BinosURL url) {
 		return url.getServiceOpsUrl();
 	}
+	
+	public static String getOpsUrl(String url) {
+		return url.substring(url.lastIndexOf("#") +1);
+	}
 	public String getServiceType() {
 		if (this.type != null) {
 			return this.type;

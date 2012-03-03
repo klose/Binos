@@ -13,5 +13,6 @@
 	<classpathentry kind="lib" path="lib/servlet-api-2.5-6.1.14.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Transformer"/>
 	<classpathentry kind="lib" path="lib/zmq.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/DataBus"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

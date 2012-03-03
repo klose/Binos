@@ -1,12 +1,61 @@
 package cn.ict.binos.transmit;
 
 import org.zeromq.*;
+
+import com.longyi.databus.clientapi.DataBusAPI;
+
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
+public class MessageClientChannel <T> extends ClientChannelBase<byte[]> {
+	public static Set<String> supportOps = new HashSet<String>();
+	private static Logger LOG = Logger.getLogger(DataBusClientChannel.class
+			.getName());
+	private String InProEndpoint;
+	private ZContext context = null;
+	private ZMQ.Socket SocketToLocalDataServer = null;
+	private final static DataBusAPI dataBus = new DataBusAPI();
+	static {
+		supportOps.add("get");
+		supportOps.add("set");
+		supportOps.add("read");
+		supportOps.add("write");
+	};
+
+	public MessageClientChannel() {
+
+	}
+
+	public static String getLocation(String key) {
+		return dataBus.getMessageLocation(key);
+	}
+
+	@Override
+	public byte[] getValue(String key) {
+		return dataBus.getMessage(key);
+	}
+
+	@Override
+	public int putValue(String key, byte[] value) {
+		// TODO Auto-generated method stub
+		return dataBus.sendMessage(key, value);
+	}
+
+	public int FreeData(String key) {
+		return dataBus.freeMessage(key);
+	}
+}
+
+/**
+ * This API should be compatible with C++ zeroMQ Master-Slave.
+ * @author jiangbing Mar 3, 2012
+ *
+ * @param <T>
+ */
 //use zeromq to send message.
-public class MessageClientChannel<T> extends ClientChannelBase<byte[]> {
+/*public class MessageClientChannel<T> extends ClientChannelBase<byte[]> {
+	
 	public static Set<String> supportOps = new HashSet<String> ();
 	private static Logger LOG = Logger.getLogger(MessageClientChannel.class.getName());
 	private String InProEndpoint;
@@ -137,26 +186,7 @@ public class MessageClientChannel<T> extends ClientChannelBase<byte[]> {
 			}else {
 				LOG.info("DELETE operation wrong!");
 			}
-		}
-		/*String Data="love you";
-		_data.StoreMessage("heihei", Data.getBytes());
-		
-		for(int i=0;i<10;i++)
-		{
-			byte[] rtv=_data.GetData("heihei");
-			System.out.println((new String(rtv)));
-		}
-			
-		_data.FreeData("heihei");
-			
-		byte[] rtv1=_data.GetData("heihei");
-		if(rtv1!=null)
-			System.out.println((new String(rtv1)));
-			
-		_data.StoreMessage("heihei", Data.getBytes());
-		byte[] rtv2=_data.GetData("heihei");
-			//if(rtv1!=null)
-		System.out.println((new String(rtv2)));*/	
+		}	
 	}
-}
+}*/
 

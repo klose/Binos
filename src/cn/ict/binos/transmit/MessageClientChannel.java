@@ -2,9 +2,13 @@ package cn.ict.binos.transmit;
 
 import org.zeromq.*;
 
+import com.longyi.databus.clientapi.ChannelOutputStream;
 import com.longyi.databus.clientapi.DataBusAPI;
 
+
+
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -35,15 +39,25 @@ public class MessageClientChannel <T> extends ClientChannelBase<byte[]> {
 	public byte[] getValue(String key) {
 		return dataBus.getMessage(key);
 	}
-
+	
 	@Override
 	public int putValue(String key, byte[] value) {
 		// TODO Auto-generated method stub
 		return dataBus.sendMessage(key, value);
 	}
 
-	public int FreeData(String key) {
+	public int FreeValue(String key) {
 		return dataBus.freeMessage(key);
+	}
+	
+	public int appendData(String key, byte[] value) {
+		return dataBus.sendDataToChannel(key, value);
+	}
+	public List<byte[]> fetchAllData(String key) {
+		return dataBus.getALLDataFromChannel(key);
+	}
+	public int FreeAllData(String key) {
+		return dataBus.freeChannel(key);
 	}
 }
 

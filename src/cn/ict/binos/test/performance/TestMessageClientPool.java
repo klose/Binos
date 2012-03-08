@@ -72,7 +72,7 @@ public class TestMessageClientPool {
 		readBytesFromConnection(args[1], totalNum);
 		
 		
-		mcc.FreeData("MSG://test-performace-MSG-Pool-write");
+		mcc.FreeValue("MSG://test-performace-MSG-Pool-write");
 		
 		
 	}

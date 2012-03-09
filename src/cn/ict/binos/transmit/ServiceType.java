@@ -12,7 +12,7 @@ import org.apache.hadoop.io.Text;
 import com.transformer.compiler.TransmitType;
 
 public class ServiceType {
-	public static enum defaultType {NONE, HDFS, MEMCACHED, MESSAGE, REMOTE, LOCAL};
+	public static enum defaultType {NONE, HDFS, MEMCACHED, MESSAGE, REMOTE, LOCAL, DISTMEM};
 	
 	private static Set<Text> userDefinedTypes = new HashSet<Text> ();
 	private static Map<Text, Class<? extends ClientChannelBase>> definedClass = 
@@ -54,6 +54,8 @@ public class ServiceType {
 				else return defaultType.LOCAL;
 			case MESSAGE:
 				return defaultType.MESSAGE;
+			case DIST_MEMORY:
+				return defaultType.DISTMEM;
 			default:
 				return defaultType.HDFS;
 		}
